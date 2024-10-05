@@ -115,9 +115,15 @@ function init() {
             button.innerText = "Start Orbiting"; // Change button text
             button.style.backgroundColor = "green"; // Change button color
 
-            // Update planet description
-            document.getElementById("bodyDescription").innerHTML = selectedPlanet.description;
-        }
+ // Update planet name and description
+        document.getElementById("bodyName").innerHTML = selectedPlanet.name;
+        document.getElementById("bodyDescription").innerHTML = selectedPlanet.description;
+
+        // Show the info panel
+        document.getElementById("infoPanel").style.display = "block"; // Show the panel when a planet is selected
+    } else {
+        document.getElementById("infoPanel").style.display = "none"; // Hide the panel if no planet is selected
+    }
     });
 
     // Reset button event
