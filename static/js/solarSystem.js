@@ -91,41 +91,41 @@ function init() {
         bodySelect.appendChild(option);
     });
 
-    // Dropdown event to select body
-    document.getElementById("bodySelect").addEventListener("change", (event) => {
-        const selectedName = event.target.value;
-        selectedBody = planets.find(planet => planet.name === selectedName) || null;
+// Dropdown event to select body
+document.getElementById("bodySelect").addEventListener("change", (event) => {
+    const selectedName = event.target.value;
+    selectedBody = planets.find(planet => planet.name === selectedName) || null;
 
-        // Update controls target to the selected body position
-        if (selectedBody) {
-            controls.target.copy(selectedBody.mesh.position); // Set control target to the selected body
+    // Update controls target to the selected body position
+    if (selectedBody) {
+        controls.target.copy(selectedBody.mesh.position); // Set control target to the selected body
 
-            // Calculate a safe zoom distance based on the planet's size
-            const safeDistance = selectedBody.mesh.scale.x * 20; // Adjust multiplier if necessary
-            const minZoomPosition = selectedBody.mesh.position.clone().add(cameraOffset.clone().normalize().multiplyScalar(safeDistance));
+        // Calculate a safe zoom distance based on the planet's size
+        const safeDistance = selectedBody.mesh.scale.x * 20; // Adjust multiplier if necessary
+        const minZoomPosition = selectedBody.mesh.position.clone().add(cameraOffset.clone().normalize().multiplyScalar(safeDistance));
 
-            // Set the target position for zooming
-            camera.position.copy(minZoomPosition); // Immediately move to the new position
-            isZooming = true; // Set zooming flag to true
+        // Set the target position for zooming
+        camera.position.copy(minZoomPosition); // Immediately move to the new position
+        isZooming = true; // Set zooming flag to true
 
-            // Stop orbiting when a body is selected
-            isOrbiting = false;
+        // Stop orbiting when a body is selected
+        isOrbiting = false;
 
-            // Change button text and color
-            const button = document.getElementById("toggleOrbitButton");
-            button.innerText = "Start Orbiting"; // Change button text
-            button.style.backgroundColor = "green"; // Change button color
+        // Change button text and color
+        const button = document.getElementById("toggleOrbitButton");
+        button.innerText = "Start Orbiting"; // Change button text
+        button.style.backgroundColor = "green"; // Change button color
 
- // Update planet name and description
-        document.getElementById("bodyName").innerHTML = selectedPlanet.name;
-        document.getElementById("bodyDescription").innerHTML = selectedPlanet.description;
+        // Update planet name and description
+        document.getElementById("bodyName").innerHTML = selectedBody.name; // Update name
+        document.getElementById("bodyDescription").innerHTML = selectedBody.description; // Update description
 
         // Show the info panel
         document.getElementById("infoPanel").style.display = "block"; // Show the panel when a planet is selected
     } else {
         document.getElementById("infoPanel").style.display = "none"; // Hide the panel if no planet is selected
     }
-    });
+});
 
     // Reset button event
     document.getElementById("resetButton").addEventListener("click", resetCamera);
