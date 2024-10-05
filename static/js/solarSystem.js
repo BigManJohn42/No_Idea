@@ -116,7 +116,7 @@ function init() {
             button.style.backgroundColor = "green"; // Change button color
 
             // Update planet description
-            document.getElementById("planetDescription").innerHTML = selectedPlanet.description;
+            document.getElementById("bodyDescription").innerHTML = selectedPlanet.description;
         }
     });
 
