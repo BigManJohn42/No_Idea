@@ -117,8 +117,8 @@ function init() {
             button.style.backgroundColor = "green"; // Change button color
 
  // Update planet name and description
-        document.getElementById("bodyName").innerHTML = selectedBody.name;
-        document.getElementById("bodyDescription").innerHTML = selectedBody.description;
+        document.getElementById("bodyName").innerHTML = selectedPlanet.name;
+        document.getElementById("bodyDescription").innerHTML = selectedPlanet.description;
 
         // Show the info panel
         document.getElementById("infoPanel").style.display = "block"; // Show the panel when a planet is selected
