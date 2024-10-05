@@ -50,6 +50,53 @@ function init() {
     controls.minDistance = 100; // Adjusted minimum zoom distance
     controls.maxDistance = 100000; // Increased maximum zoom distance for wider view
 
+
+    //Delete
+
+     // Load and set up background image
+    const loader = new THREE.TextureLoader();
+    loader.load('background.jpg', function(texture) {
+        const backgroundGeometry = new THREE.PlaneGeometry(10000, 10000); // Large plane for the background
+        const backgroundMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+        const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+
+        // Position the background behind all objects
+        backgroundMesh.position.z = -500; // Adjust this value as needed
+        scene.add(backgroundMesh);
+    });
+
+    // Animation loop
+    animate();
+}
+
+// Animation loop to render the scene
+function animate() {
+    requestAnimationFrame(animate);
+    
+    // Update the background plane position based on camera position
+    if (scene.background) {
+        scene.background.position.copy(camera.position); // Sync background with camera
+    }
+
+    controls.update(); // Update controls
+    renderer.render(scene, camera); // Render the scene
+}
+
+// Resize event
+window.addEventListener('resize', function() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Initialize the scene
+init();
+
+//Delete
+
+
+
+
     // Load celestial bodies
     const bodySelect = document.getElementById("bodySelect");
     const loader = new THREE.GLTFLoader();
