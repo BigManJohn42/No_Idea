@@ -52,8 +52,29 @@ function init() {
 
 
     //Delete
+let scene, camera, renderer, controls;
 
-     // Load and set up background image
+// Function to initialize the scene
+function init() {
+    // Scene setup
+    scene = new THREE.Scene();
+
+    // Camera setup
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000);
+    camera.position.set(0, 0, 500); // Adjusted for a better view
+
+    // Renderer setup
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Add OrbitControls to allow interaction
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = true;
+
+    // Load and set up background image
     const loader = new THREE.TextureLoader();
     loader.load('background.jpg', function(texture) {
         const backgroundGeometry = new THREE.PlaneGeometry(10000, 10000); // Large plane for the background
@@ -61,7 +82,7 @@ function init() {
         const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
 
         // Position the background behind all objects
-        backgroundMesh.position.z = -500; // Adjust this value as needed
+        backgroundMesh.position.z = -500; // Ensure it's behind other objects
         scene.add(backgroundMesh);
     });
 
@@ -72,10 +93,11 @@ function init() {
 // Animation loop to render the scene
 function animate() {
     requestAnimationFrame(animate);
-    
-    // Update the background plane position based on camera position
-    if (scene.background) {
-        scene.background.position.copy(camera.position); // Sync background with camera
+
+    // Sync the background position with camera position (optional, for a parallax effect)
+    if (scene.children.length > 0) {
+        const backgroundMesh = scene.children[0]; // Assuming the background is the first child
+        backgroundMesh.position.copy(camera.position).setZ(-500); // Keep it behind the camera
     }
 
     controls.update(); // Update controls
