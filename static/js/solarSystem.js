@@ -9,15 +9,15 @@ let isZooming = false; // Flag to check if zooming is in progress
 
 // Define celestial bodies with updated models, sizes, and distances
 const celestialBodies = [
-    { name: 'Sun', model: 'models/centered_Sun.glb', distance: 0, size: 100, speed: 0, color: 0xffff00 },
-    { name: 'Mercury', model: 'models/centered_Mercury.glb', distance: 1.05 * 1500, size: 0.35 * 2, speed: 0.02, color: 0xaaaaaa },
-    { name: 'Venus', model: 'models/centered_Venus.glb', distance: 1.96 * 1500, size: 0.87 * 2, speed: 0.015, color: 0xffffaa },
-    { name: 'Earth', model: 'models/centered_Earth.glb', distance: 2.76 * 1500, size: 0.92 * 2, speed: 0.01, color: 0x0000ff },
-    { name: 'Mars', model: 'models/centered_Mars.glb', distance: 4.18 * 1500, size: 0.49 * 2, speed: 0.008, color: 0xff0000 },
-    { name: 'Jupiter', model: 'models/centered_Jupiter.glb', distance: 14.39 * 1500, size: 10.1 * 2, speed: 0.005, color: 0xffaa00 },
-    { name: 'Saturn', model: 'models/centered_Saturn.glb', distance: 26.59 * 1500, size: 8.44 * 2, speed: 0.004, color: 0xffcc99 },
-    { name: 'Uranus', model: 'models/centered_Uranus.glb', distance: 53.63 * 1500, size: 3.63 * 2, speed: 0.003, color: 0x00ffff },
-    { name: 'Neptune', model: 'models/centered_Neptune.glb', distance: 83.05 * 1500, size: 3.56 * 2, speed: 0.002, color: 0x0000ff }
+    { name: 'Sun', model: 'static/models/centered_Sun.glb', distance: 0, size: 100, speed: 0, color: 0xffff00 },
+    { name: 'Mercury', model: 'static/models/centered_Mercury.glb', distance: 1.05 * 1500, size: 0.35 * 2, speed: 0.02, color: 0xaaaaaa },
+    { name: 'Venus', model: 'static/models/centered_Venus.glb', distance: 1.96 * 1500, size: 0.87 * 2, speed: 0.015, color: 0xffffaa },
+    { name: 'Earth', model: 'static/models/centered_Earth.glb', distance: 2.76 * 1500, size: 0.92 * 2, speed: 0.01, color: 0x0000ff },
+    { name: 'Mars', model: 'static/models/centered_Mars.glb', distance: 4.18 * 1500, size: 0.49 * 2, speed: 0.008, color: 0xff0000 },
+    { name: 'Jupiter', model: 'static/models/centered_Jupiter.glb', distance: 14.39 * 1500, size: 10.1 * 2, speed: 0.005, color: 0xffaa00 },
+    { name: 'Saturn', model: 'static/models/centered_Saturn.glb', distance: 26.59 * 1500, size: 8.44 * 2, speed: 0.004, color: 0xffcc99 },
+    { name: 'Uranus', model: 'static/models/centered_Uranus.glb', distance: 53.63 * 1500, size: 3.63 * 2, speed: 0.003, color: 0x00ffff },
+    { name: 'Neptune', model: 'static/models/centered_Neptune.glb', distance: 83.05 * 1500, size: 3.56 * 2, speed: 0.002, color: 0x0000ff }
 ];
 
 function init() {

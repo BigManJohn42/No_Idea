@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/models/<path:filename>')
 def serve_models(filename):
-    return send_from_directory('models', filename)
+    return send_from_directory('static/models', filename)
 
 @app.route('/')
 def index():
