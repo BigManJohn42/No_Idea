@@ -51,6 +51,7 @@ function init() {
     controls.maxDistance = 100000; // Increased maximum zoom distance for wider view
 
     // Load celestial bodies
+    const bodySelect = document.getElementById("bodySelect");
     const loader = new THREE.GLTFLoader();
 
     celestialBodies.forEach((body) => {
@@ -59,7 +60,7 @@ function init() {
             const bodyMesh = gltf.scene; // The loaded model
             bodyMesh.scale.set(body.size, body.size, body.size); // Set the size according to the accurate scaling
             bodyMesh.position.x = body.distance; // Set initial position
-            planets.push({ name: body.name, mesh: bodyMesh, speed: body.speed, distance: body.distance, angle: 0 });
+            planets.push({ name: body.name, mesh: bodyMesh, speed: body.speed, distance: body.distance, angle: 0, description: body.description });
 
             // Add orbit path if it's not the Sun
             if (body.name !== 'Sun') {
