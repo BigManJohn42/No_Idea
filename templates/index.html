@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar System with Smooth Camera Follow and Free Rotation</title>
+  <link rel="stylesheet" href="/static/css/style.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+  <!-- Dropdown for body selection -->
+  <div id="controls">
+    <label for="bodySelect">Center on:</label>
+    <select id="bodySelect">
+      <option value="">Select Body</option>
+    </select>
+    <button id="resetButton">Reset Camera</button>
+    <button id="toggleOrbitButton" style="background-color: red; color: white;">Stop Orbiting</button>
+  </div>
+
+  <!-- Include Three.js and OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="/static/js/solarSystem.js"></script> <!-- Update JS path -->
+</body>
+</html>
+//this is a test
