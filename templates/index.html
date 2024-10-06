@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar System with Smooth Camera Follow and Free Rotation</title>
+  <title>No Idea</title>
   <link rel="stylesheet" href="/static/css/styles.css"> <!-- Link to the CSS file -->
 </head>
 <body>
-  <!-- Dropdown for body selection -->
-  <div id="controls">
+  <!-- Navbar-like controls -->
+  <div id="navbar">
+    <!-- Dropdown for body selection -->
+    <div id="controls">
       <label for="bodySelect">Center on:</label>
       <select id="bodySelect">
         <option value="">Select Body</option>
@@ -16,20 +18,20 @@
       <button id="resetButton">Reset Camera</button>
       <button id="toggleOrbitButton" style="background-color: red; color: white;">Stop Orbiting</button>
 
-      <!-- Add the speed multiplier input -->
+      <!-- Speed controls -->
       <div id="speedControls">
         <label for="speedMultiplier">Speed Multiplier:</label>
-        <input type="number" id="speedMultiplier" value="1" min="1" step="1" style="width: 80px; margin-left: 5px;">
-        <button id="applySpeedButton" style="background-color: green; color: white; margin-left: 5px;">Apply Speed</button>
-        <button id="resetSpeedButton" style="background-color: #E74C3C; color: white; margin-left: 5px;">Reset Speed</button>
+        <input type="number" id="speedMultiplier" value="1" min="1" step="1">
+        <button id="applySpeedButton">Apply Speed</button>
+        <button id="resetSpeedButton">Reset Speed</button>
       </div>
+    </div>
   </div>
 
   <div id="infoPanel">
     <h2 id="bodyName">Celestial Body Name</h2>
     <h3>Description:</h3>
     <p id="bodyDescription"></p>
-    
   </div>
 
   <!-- Include Three.js and OrbitControls -->
