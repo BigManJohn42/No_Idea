@@ -7,6 +7,9 @@ const originalCameraRotation = new THREE.Euler(0, 0, 0); // Store original camer
 let isOrbiting = true; // Flag to track the orbiting state
 let isZooming = false; // Flag to check if zooming is in progress
 
+let stars = []; // Array to hold star points
+let cometParticles = []; // Array to hold comet particles
+
 // Define celestial bodies with updated models, sizes, distances, zoom distances, and min distances
 const celestialBodies = [
     { name: 'Sun', model: 'static/models/centered_Sun.glb', distance: 0, size: 100, speed: 0, color: 0xffff00, zoomDistance: 1600, minDistance: 1500 }, // Added minDistance
@@ -59,6 +62,59 @@ const celestialInfo = {
     }
 };
 
+function createStars() {
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 10000; // Number of stars
+    const positions = new Float32Array(starCount * 3); // x, y, z for each star
+
+    for (let i = 0; i < starCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 400000; // Random x position (increased range)
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 400000; // Random y position (increased range)
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 400000; // Random z position (increased range)
+    }
+
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 }); // Increased size for better visibility
+    const starsMesh = new THREE.Points(starGeometry, starMaterial);
+    scene.add(starsMesh);
+    stars.push(starsMesh);
+}
+
+function createComets() {
+    const cometGeometry = new THREE.SphereGeometry(2, 8, 8); // Comet shape
+    const cometMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+
+    for (let i = 0; i < 50; i++) { // Create a few comets
+        const comet = new THREE.Mesh(cometGeometry, cometMaterial);
+        comet.position.set(
+            (Math.random() - 0.5) * 20000,
+            (Math.random() - 0.5) * 20000,
+            (Math.random() - 0.5) * 20000
+        );
+        comet.direction = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
+        comet.speed = Math.random() * 2 + 1; // Random speed
+        cometParticles.push(comet);
+        scene.add(comet);
+    }
+}
+
+function animateComets() {
+    cometParticles.forEach(comet => {
+        comet.position.add(comet.direction.clone().multiplyScalar(comet.speed));
+
+        // Reset comet position if it goes too far
+        if (comet.position.length() > 20000) {
+            comet.position.set(
+                (Math.random() - 0.5) * 20000,
+                (Math.random() - 0.5) * 20000,
+                (Math.random() - 0.5) * 20000
+            );
+            comet.direction.set(Math.random(), Math.random(), Math.random()).normalize(); // New direction
+        }
+    });
+}
+
 function init() {
     // Scene setup
     scene = new THREE.Scene();
@@ -73,7 +129,7 @@ function init() {
     scene.add(sunLight); // Add the light to the scene
 
     // Camera setup
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000); // Increased far plane to 100000
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000000); // Set the far plane to 1000000 for even more distant stars
     camera.position.copy(originalCameraPosition); // Set to original position
 
     // Renderer setup
@@ -297,6 +353,10 @@ function init() {
         }
     });
 
+    // Create stars and comets
+    createStars();
+    createComets();
+
     animate();
 }
 
@@ -326,6 +386,8 @@ function animate() {
             }
         });
     }
+
+    animateComets(); // Animate the comets
 
     // Update controls
     controls.update();
