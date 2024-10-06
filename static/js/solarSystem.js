@@ -133,6 +133,33 @@ function init() {
                 });
             }
 
+            if (body.name === 'Earth') {
+                // Load the moon model
+                loader.load('static/models/centered_Moon.glb', (moonGltf) => {
+                    const moonMesh = moonGltf.scene;
+                    moonMesh.scale.set(0.27 * 2, 0.27 * 2, 0.27 * 2); // Set the moon size
+                    moonMesh.position.set(0, 0, 0); // Start position at the center of Earth
+                    const moonPlanet = {
+                        name: 'Moon',
+                        mesh: moonMesh,
+                        speed: 0.02,
+                        angle: 0,
+                        distance: 100,
+                        parent: bodyMesh,
+                        zoomDistance: 120, // Set zoom distance for the Moon
+                        minDistance: 100 // Set minimum zoom distance for the Moon
+                    };
+                    planets.push(moonPlanet); // Store reference to the Moon
+                    bodyMesh.add(moonMesh); // Add the moon mesh to the Earth
+
+                    // Now, add the Moon to the dropdown menu
+                    const moonOption = document.createElement("option");
+                    moonOption.value = moonPlanet.name;
+                    moonOption.text = moonPlanet.name;
+                    bodySelect.appendChild(moonOption);
+                });
+            }
+
             planets.push({ name: body.name,
                            mesh: bodyMesh,
                            speed: body.speed,
@@ -175,48 +202,62 @@ function init() {
     // Update the dropdown event to display information when a body is selected
     bodySelect.addEventListener("change", (event) => {
         const selectedName = event.target.value;
-        selectedBody = planets.find(planet => planet.name === selectedName) || null;
 
-        // Update controls target to the selected body position
-        if (selectedBody) {
-            controls.target.copy(selectedBody.mesh.position);
+        // Find the selected celestial body
+        if (selectedName === 'Moon') {
+            // For the Moon, find the parent (Earth) to center on
+            const earth = planets.find(planet => planet.name === 'Earth');
+            selectedBody = planets.find(planet => planet.name === 'Moon') || null;
 
-            // Adjust minDistance for controls
-            controls.minDistance = selectedBody.minDistance; // Set controls.minDistance to selected body's minDistance
-            const safeDistance = selectedBody.zoomDistance; // Use zoomDistance instead of fixed value
-            const cameraPosition = selectedBody.mesh.position.clone().add(cameraOffset.clone().normalize().multiplyScalar(safeDistance));
-
-            // Ensure the camera does not zoom in closer than minDistance
-            const distanceToBody = camera.position.distanceTo(selectedBody.mesh.position);
-            if (distanceToBody < controls.minDistance) {
-                // If the camera is too close, position it at minDistance
-                const direction = camera.position.clone().sub(selectedBody.mesh.position).normalize();
-                camera.position.copy(selectedBody.mesh.position.clone().add(direction.multiplyScalar(controls.minDistance)));
-            } else {
-                camera.position.copy(cameraPosition);
+            if (selectedBody && earth) {
+                // Center on Moon's position relative to Earth
+                const moonPosition = earth.mesh.position.clone().add(selectedBody.mesh.position.clone().normalize().multiplyScalar(selectedBody.distance));
+                controls.target.copy(moonPosition); // Set controls target to the Moon's position
+                camera.position.copy(moonPosition.clone().add(cameraOffset.clone().normalize().multiplyScalar(selectedBody.zoomDistance)));
+                controls.minDistance = selectedBody.minDistance; // Set the min distance for controls
             }
+        } else {
+            selectedBody = planets.find(planet => planet.name === selectedName) || null;
 
-            isZooming = true;
-            isOrbiting = false;
+            // Update controls target to the selected body position
+            if (selectedBody) {
+                controls.target.copy(selectedBody.mesh.position);
+                controls.minDistance = selectedBody.minDistance; // Set controls.minDistance to selected body's minDistance
+                const cameraPosition = selectedBody.mesh.position.clone().add(cameraOffset.clone().normalize().multiplyScalar(selectedBody.zoomDistance));
 
-            // Show info in the panel
-            const infoPanel = document.getElementById('infoPanel');
-            const bodyName = document.getElementById('bodyName');
-            const bodyDescription = document.getElementById('bodyDescription');
-
-            // Populate the panel with selected celestial body info
-            if (celestialInfo[selectedName]) {
-                bodyName.innerHTML = celestialInfo[selectedName].name;
-                bodyDescription.innerHTML = celestialInfo[selectedName].description;
-                infoPanel.style.display = 'block'; // Show the panel
+                // Ensure the camera does not zoom in closer than minDistance
+                const distanceToBody = camera.position.distanceTo(selectedBody.mesh.position);
+                if (distanceToBody < controls.minDistance) {
+                    // If the camera is too close, position it at minDistance
+                    const direction = camera.position.clone().sub(selectedBody.mesh.position).normalize();
+                    camera.position.copy(selectedBody.mesh.position.clone().add(direction.multiplyScalar(controls.minDistance)));
+                } else {
+                    camera.position.copy(cameraPosition);
+                }
             }
-
-            // Change button text and color
-            const button = document.getElementById("toggleOrbitButton");
-            button.innerText = "Start Orbiting";
-            button.style.backgroundColor = "green";
         }
+
+        isZooming = true;
+        isOrbiting = false;
+
+        // Show info in the panel
+        const infoPanel = document.getElementById('infoPanel');
+        const bodyName = document.getElementById('bodyName');
+        const bodyDescription = document.getElementById('bodyDescription');
+
+        // Populate the panel with selected celestial body info
+        if (celestialInfo[selectedName]) {
+            bodyName.innerHTML = celestialInfo[selectedName].name;
+            bodyDescription.innerHTML = celestialInfo[selectedName].description;
+            infoPanel.style.display = 'block'; // Show the panel
+        }
+
+        // Change button text and color
+        const button = document.getElementById("toggleOrbitButton");
+        button.innerText = "Start Orbiting";
+        button.style.backgroundColor = "green";
     });
+
 
     // Hide the info panel when the reset button is clicked
     document.getElementById("resetButton").addEventListener("click", () => {
@@ -268,11 +309,20 @@ function animate() {
     if (isOrbiting) {
         planets.forEach(planet => {
             if (planet.speed > 0) {
-                planet.angle += planet.speed; // Increase the angle for the planet's orbit
-                const x = planet.distance * Math.cos(planet.angle); // Calculate x position
-                const z = planet.distance * Math.sin(planet.angle); // Calculate z position
-                planet.mesh.position.set(x, 0, z); // Update planet position
-                if (planet.light) planet.light.position.copy(planet.mesh.position); // Move the point light with the planet
+                if (planet.name === 'Moon') {
+                    // Moon orbiting the Earth
+                    planet.angle += planet.speed; // Increase the angle for the moon's orbit
+                    const x = planet.distance * Math.cos(planet.angle); // Calculate x position
+                    const z = planet.distance * Math.sin(planet.angle); // Calculate z position
+                    planet.mesh.position.set(x, 0, z); // Update moon position relative to Earth
+                } else {
+                    // Planets orbiting the Sun
+                    planet.angle += planet.speed; // Increase the angle for the planet's orbit
+                    const x = planet.distance * Math.cos(planet.angle); // Calculate x position
+                    const z = planet.distance * Math.sin(planet.angle); // Calculate z position
+                    planet.mesh.position.set(x, 0, z); // Update planet position
+                    if (planet.light) planet.light.position.copy(planet.mesh.position); // Move the point light with the planet
+                }
             }
         });
     }
