@@ -41,14 +41,25 @@ select {
     color: #ffffff; /* White text */
 }
 
-button {
-    background-color: #E74C3C; /* NASA red */
+#applySpeedButton {
+    background-color: #28a745; /* Green background for Apply Speed button */
     color: #ffffff; /* White text */
+    margin-left: 10px;
+}
+
+#applySpeedButton:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slight scale effect */
+}
+
+button {
+    background-color: #E74C3C; /* NASA red for other buttons */
+    color: #ffffff;
 }
 
 button:hover {
-    background-color: #C0392B; /* Darker red on hover */
-    transform: scale(1.05); /* Slight scale effect */
+    background-color: #C0392B; /* Darker red on hover for other buttons */
+    transform: scale(1.05);
 }
 
 #speedControls {
