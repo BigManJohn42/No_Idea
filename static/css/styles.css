@@ -1,12 +1,12 @@
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-        }
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
 
 #controls {
     position: absolute;
@@ -51,34 +51,83 @@ button:focus {
     outline: none; /* Remove focus outline */
 }
 
-        #infoPanel {
-            display: none; /* Hide by default */
-            position: absolute; /* Position it absolutely within the body */
-            top: 50%; /* Center vertically */
-            right: 20px; /* 20px from the right */
-            transform: translateY(-50%); /* Adjust to truly center vertically */
-            padding: 10px; /* Reduced padding */
-            background-color: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Reduced shadow for depth */
-            width: 300px; /* Set a fixed width */
-            max-height: 80vh; /* Set a max height to prevent overflow */
-            overflow-y: auto; /* Add vertical scrolling if needed */
-            color: white; /* Text color for visibility */
-            font-family: Arial, sans-serif; /* Font style */
-        }
+#infoPanel {
+    display: none; /* Hide by default */
+    position: absolute; /* Position it absolutely within the body */
+    top: 50%; /* Center vertically */
+    right: 20px; /* 20px from the right */
+    transform: translateY(-50%); /* Adjust to truly center vertically */
+    padding: 10px; /* Reduced padding */
+    background-color: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Reduced shadow for depth */
+    width: 300px; /* Set a fixed width */
+    max-height: 80vh; /* Set a max height to prevent overflow */
+    overflow-y: auto; /* Add vertical scrolling if needed */
+    color: white; /* Text color for visibility */
+    font-family: Arial, sans-serif; /* Font style */
+}
 
-        #infoPanel h2 {
-            margin: 0; /* Remove default margin */
-            font-size: 24px; /* Larger font size for the title */
-        }
+#infoPanel h2 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px; /* Larger font size for the title */
+}
 
-        #infoPanel p {
-            margin: 5px 0; /* Add some spacing between paragraphs */
-            font-size: 16px; /* Standard font size for paragraphs */
-        }
+#infoPanel p {
+    margin: 5px 0; /* Add some spacing between paragraphs */
+    font-size: 16px; /* Standard font size for paragraphs */
+}
 
-        #bodyDescription {
-            white-space: pre-line; /* Preserve line breaks in the description */
-            margin: 5px 0; /* Spacing between text lines */
-        }
+#bodyDescription {
+    white-space: pre-line; /* Preserve line breaks in the description */
+    margin: 5px 0; /* Spacing between text lines */
+}
+
+#speedControls {
+    margin-top: 10px; /* Add some spacing from the other controls */
+}
+
+#speedControls label {
+    color: #ffffff; /* White text for visibility */
+    margin-right: 10px;
+}
+
+#speedMultiplier {
+    padding: 10px;
+    font-size: 16px;
+    width: 60px; /* Fixed width for the input box */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    background-color: #0072B8; /* NASA blue */
+    color: #ffffff; /* White text */
+}
+
+#applySpeedButton {
+    background-color: #E74C3C; /* NASA red */
+    color: #ffffff; /* White text */
+    margin-left: 10px;
+}
+
+#applySpeedButton:hover {
+    background-color: #C0392B; /* Darker red on hover */
+    transform: scale(1.05); /* Slight scale effect */
+}
+
+#resetSpeedButton {
+    background-color: #E74C3C;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#resetSpeedButton:hover {
+    background-color: #C0392B;
+    transform: scale(1.05);
+}
+
+
+

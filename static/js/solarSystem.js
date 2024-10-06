@@ -92,6 +92,27 @@ function init() {
     // Load celestial bodies
     const loader = new THREE.GLTFLoader();
 
+    // Handle the Apply Speed button click event
+    document.getElementById("applySpeedButton").addEventListener("click", () => {
+        const multiplier = parseFloat(document.getElementById("speedMultiplier").value);
+
+        if (!isNaN(multiplier) && multiplier > 0) {
+            planets.forEach(planet => {
+                planet.speed = planet.originalSpeed * multiplier; // Multiply the original speed by the input value
+            });
+        }
+    });
+
+    // Handle the Reset Speed button click event
+    document.getElementById("resetSpeedButton").addEventListener("click", () => {
+        planets.forEach(planet => {
+            planet.speed = planet.originalSpeed; // Reset the speed to the original value
+        });
+
+        // Optionally reset the speed multiplier input to 1
+        document.getElementById("speedMultiplier").value = 1;
+    });
+
     celestialBodies.forEach((body) => {
         // Load the model
         loader.load(body.model, (gltf) => {
@@ -112,7 +133,15 @@ function init() {
                 });
             }
 
-            planets.push({ name: body.name, mesh: bodyMesh, speed: body.speed, distance: body.distance, angle: 0, zoomDistance: body.zoomDistance, minDistance: body.minDistance });
+            planets.push({ name: body.name,
+                           mesh: bodyMesh,
+                           speed: body.speed,
+                           originalSpeed: body.speed, // Store the original speed for later use
+                           distance: body.distance,
+                           angle: 0,
+                           zoomDistance: body.zoomDistance,
+                           minDistance: body.minDistance
+                        });
 
             // Add orbit path if it's not the Sun
             if (body.name !== 'Sun') {

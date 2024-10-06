@@ -9,14 +9,23 @@
 <body>
   <!-- Dropdown for body selection -->
   <div id="controls">
-    <label for="bodySelect">Center on:</label>
-    <select id="bodySelect">
-      <option value="">Select Body</option>
-    </select>
-    <button id="resetButton">Reset Camera</button>
-    <button id="toggleOrbitButton" style="background-color: red; color: white;">Stop Orbiting</button>
-</div>
-    <div id="infoPanel">
+      <label for="bodySelect">Center on:</label>
+      <select id="bodySelect">
+        <option value="">Select Body</option>
+      </select>
+      <button id="resetButton">Reset Camera</button>
+      <button id="toggleOrbitButton" style="background-color: red; color: white;">Stop Orbiting</button>
+
+      <!-- Add the speed multiplier input -->
+      <div id="speedControls">
+        <label for="speedMultiplier">Speed Multiplier:</label>
+        <input type="number" id="speedMultiplier" value="1" min="1" step="1" style="width: 80px; margin-left: 5px;">
+        <button id="applySpeedButton" style="background-color: green; color: white; margin-left: 5px;">Apply Speed</button>
+        <button id="resetSpeedButton" style="background-color: #E74C3C; color: white; margin-left: 5px;">Reset Speed</button>
+      </div>
+  </div>
+
+  <div id="infoPanel">
     <h2 id="bodyName">Celestial Body Name</h2>
     <h3>Description:</h3>
     <p id="bodyDescription"></p>
