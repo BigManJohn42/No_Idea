@@ -229,7 +229,7 @@ function init() {
             // Add orbit path if it's not the Sun
             if (body.name !== 'Sun') {
                 const orbitGeometry = new THREE.RingGeometry(body.distance - 5, body.distance + 5, 64); // Updated orbit path
-                const orbitMaterial = new THREE.MeshBasicMaterial({ color: 0xa8a5a2, side: THREE.DoubleSide });
+                const orbitMaterial = new THREE.MeshBasicMaterial({ color: 0xc8cb46, side: THREE.DoubleSide });
                 const orbitMesh = new THREE.Mesh(orbitGeometry, orbitMaterial);
                 orbitMesh.rotation.x = Math.PI / 2; // Rotate to align with the x-y plane
                 scene.add(orbitMesh);
